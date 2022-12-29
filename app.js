@@ -1,19 +1,20 @@
 import axios from "axios";
 
-async function getUsersData(number) {
-  const { data } = await axios(
+async function getData(number) {
+  const { data: user } = await axios(
     `https://jsonplaceholder.typicode.com/users/${number}`
   );
 
-  const { data: post } = await axios(
-    `https://jsonplaceholder.typicode.com/post/` + number
+  const { data: posts } = await axios(
+    `https://jsonplaceholder.typicode.com/posts?userId=${number}`
   );
 
-  try {
-    console.log(data, post);
-  } catch (error) {
-    console.log(error);
-  }
+  const data = {
+    ...user,
+    posts,
+  };
+
+  return data;
 }
 
-export default getUsersData;
+export default getData;
